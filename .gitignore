@@ -1,5 +1,11 @@
 # eclipse
 Debug
+.cproject
+.project
+.settings
+
+.directory
+
 
 # Prerequisites
 *.d
