@@ -39,3 +39,4 @@ Debug
 *.exe
 *.out
 *.app
+/ihmtest/
