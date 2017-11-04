@@ -1,25 +1,30 @@
 /**
- * MethodsLoader.hpp
+ * MMethodsLoader.hpp
  *
  * Early optimization is the root of all evil
  *
- *  Created on: 25 oct. 2017
+ *  Created on: 31 oct. 2017
  *      Author: nihil
  */
 
-#ifndef MODEL_METHODSLOADER_HPP_
-#define MODEL_METHODSLOADER_HPP_
+#ifndef SRC_MODEL_MMETHODSLOADER_HPP_
+#define SRC_MODEL_MMETHODSLOADER_HPP_
 
-class MethodsLoader
+#include <iostream>
+#include <string>
+#include <fstream>
+
+class MMethodsLoader
 {
 //========================>Attributes<========================
 private:
-
+  std::string methodsFileName;
+  std::fstream methodsFile;
 //=======================>Constructors<=======================
 public:
-  MethodsLoader();
+  MMethodsLoader();
   // TODO: rule of five ? copyandswap
-  virtual ~MethodsLoader();
+  virtual ~MMethodsLoader();
 
 private:
 
@@ -35,4 +40,4 @@ private:
 
 };
 
-#endif /* MODEL_METHODSLOADER_HPP_ */
+#endif /* SRC_MODEL_MMETHODSLOADER_HPP_ */
