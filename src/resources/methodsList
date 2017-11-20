@@ -1,0 +1,14 @@
+all{
+  Controle {
+    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter
+  }
+  Mouvement {
+    avancer ::= avancerDe($[cursor])$[nl]
+  }
+}
+
+level1{
+  Mouvement {
+    avancer ::= avancer()$[nl]
+  }
+}

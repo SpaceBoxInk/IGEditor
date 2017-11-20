@@ -11,30 +11,41 @@
 #define SRC_MODEL_MMETHODSLOADER_HPP_
 
 #include <iostream>
+#include <map>
 #include <string>
-#include <fstream>
+#include <vector>
 
 class MMethodsLoader
 {
 //========================>Attributes<========================
 private:
-  std::string methodsFileName;
-  std::fstream methodsFile;
+  std::map<std::string, std::vector<std::string>> methodsListCatMEt;
+  std::map<std::string, std::string> methodsListMNameMBody;
 //=======================>Constructors<=======================
 public:
-  MMethodsLoader();
+  MMethodsLoader(std::string const& section);
   // TODO: rule of five ? copyandswap
-  virtual ~MMethodsLoader();
+  virtual ~MMethodsLoader() = default;
 
 private:
 
 //=========================>Methods<==========================
 public:
+  void loadMethods(std::string const& section);
+
 
 private:
+  void clearMethods();
 
+  void findSection(std::string section, std::ifstream& f);
+  void readSection(std::ifstream& f);
+  void readCategorie(std::string& curLine, std::ifstream& f);
+
+  void insertMethod(std::string const& categorie, std::string const& strToParse);
 //=====================>Getters&Setters<======================
 public:
+  std::map<std::string, std::vector<std::string>> const& getListCatMeth();
+  std::map<std::string, std::string> const& getListMNameMBody();
 
 private:
 
