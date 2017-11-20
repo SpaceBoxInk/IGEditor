@@ -12,21 +12,40 @@
 class Edit;
 class Methodes;
 
-
+/**
+ * classe principale de l'editeur qui contient une zone d'edition, de methodes, de retour et 3 boutons
+ */
 class Editor : public wxFrame
 {
+private:
+  //========================>Attributes<========================
+  /**
+   *
+   */
+  wxTextCtrl *m_edit;
+  /**
+   *
+   */
+  wxTextCtrl *m_res;
+  /**
+   *
+   */
+  Methodes *m_methode;
 public:
+  //=======================>Constructors<=======================
   Editor(wxString const & title);
 
-  wxTextCtrl *m_edit;
-  wxTextCtrl *m_res;
-  Methodes *m_methode;
-
+  //=========================>Methods<==========================
   void OnQuit(wxCommandEvent & event);
-  wxTextCtrl* getEdit();
-  wxTextCtrl* getRes();
-  Methodes* getMethodes();
+  void OnAbort(wxCommandEvent & WXUNUSED(event));
+  void OnAdd(wxCommandEvent & WXUNUSED(event));
   void writeMet(std::string methode);
   void writeRes(std::string methode);
+  void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
+  void supprimerMethodes();
+  //=====================>Getters&Setters<======================
+  wxTextCtrl* getEdit() const;
+  wxTextCtrl* getRes() const;
+  Methodes* getMethodes() const;
 };
 

@@ -48,36 +48,13 @@ wxTextCtrl* Edit::getText()
  *constructeur de la zone des methodes
  * @param parent
  */
-Methodes::Methodes(wxPanel *parent,
-                   std::map<std::string, std::vector<std::string> > methodesListe) :
+Methodes::Methodes(wxPanel *parent) :
     wxTreeCtrl(parent, -1, wxPoint(-1, -1), wxSize(-1, -1),
-    wxTR_HAS_BUTTONS),
-    methodesListe(methodesListe)
+    wxTR_HAS_BUTTONS)
 {
 
+
   wxTreeItemId categor = this->AddRoot("Fonctions", -1, -1, nullptr);
-  for (auto categorie : methodesListe)
-  {
-    wxTreeItemId catego = this->AppendItem(categor, categorie.first, -1, -1, nullptr);
-    for (std::string methode : categorie.second)
-    {
-      wxTreeItemId truc = this->AppendItem(catego, methode, -1, -1,
-                                           new MyTreeItemData(methode));
-      Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
-              wxTreeEventHandler(Methodes::OnTreeClick));
-//      Bind(wxEVT_TREE_ITEM_ACTIVATED, [methode, this](wxTreeEvent & event)
-//      {
-//        Editor *comm = (Editor *)this->GetParent();
-//        wxTextCtrl *text = comm->getEdit()->getText();
-//        *text << methode << "\n";
-//      },
-//           lastC.GetID(), wxID_ANY);
-//      Connect(ID_PLUS, wxEVT_COMMAND_BUTTON_CLICKED,
-//            wxCommandEventHandler(LeftPanel::OnPlus));
-//        Connect(ID_MINUS, wxEVT_COMMAND_BUTTON_CLICKED,
-//            wxCommandEventHandler(LeftPanel::OnMinus));
-    }
-  }
   this->Expand(categor);
 }
 

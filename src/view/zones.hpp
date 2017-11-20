@@ -30,7 +30,7 @@ class Methodes : public wxTreeCtrl
 {
 public:
 
-  Methodes(wxPanel *parent, std::map<std::string, std::vector<std::string> > methodesListe);
+  Methodes(wxPanel *parent);
 
   //----------------------------------
   //les events
@@ -39,10 +39,6 @@ public:
 //  void OnMethode2(wxCommandEvent & event);
   void OnTreeClick(wxTreeEvent & event);
 
-  //----------------------------------
-  //les elements
-  //----------------------------------
-  std::map<std::string, std::vector<std::string> > methodesListe;
 };
 
 class MyTreeItemData : public wxTreeItemData
