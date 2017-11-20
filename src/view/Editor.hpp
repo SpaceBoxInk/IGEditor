@@ -18,11 +18,15 @@ class Editor : public wxFrame
 public:
   Editor(wxString const & title);
 
-  Edit *m_edit;
+  wxTextCtrl *m_edit;
+  wxTextCtrl *m_res;
   Methodes *m_methode;
 
   void OnQuit(wxCommandEvent & event);
-  Edit* getEdit();
+  wxTextCtrl* getEdit();
+  wxTextCtrl* getRes();
   Methodes* getMethodes();
+  void writeMet(std::string methode);
+  void writeRes(std::string methode);
 };
 

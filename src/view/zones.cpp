@@ -4,13 +4,13 @@
 #include <wx/event.h>
 #include <wx/gdicmn.h>
 #include <wx/gtk/textctrl.h>
+#include <wx/string.h>
 #include <wx/stringimpl.h>
 #include <wx/textctrl.h>
 #include <wx/treebase.h>
 #include <wx/validate.h>
 #include <wx/window.h>
 #include <utility>
-#include <string>
 
 #include "Editor.hpp"
 
@@ -18,10 +18,19 @@
  *constructeur de la zone d'edition
  * @param parent
  */
+#include <iostream>
+
 Edit::Edit(wxFrame *parent) :
-    wxPanel(parent, -1, wxPoint(90, -1), wxSize(200, 100), wxBORDER_SUNKEN)
+    wxPanel(parent, -1)
 {
-  text = new wxTextCtrl(parent, -1, wxEmptyString, wxPoint(90, -1), wxSize(200, 100),
+  text = new wxTextCtrl(parent, -1, wxEmptyString, wxPoint(parent->GetSize().x / 2, -1),
+                        wxSize(-1, -1), wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+}
+Edit::Edit(wxPanel *parent) :
+    wxPanel(parent, -1)
+{
+  text = new wxTextCtrl(parent, -1, wxEmptyString, wxPoint(parent->GetSize().x / 2, -1),
+                        wxSize(-1, -1),
   wxTE_MULTILINE,
                         wxDefaultValidator, wxTextCtrlNameStr);
 }
@@ -39,9 +48,10 @@ wxTextCtrl* Edit::getText()
  *constructeur de la zone des methodes
  * @param parent
  */
-Methodes::Methodes(wxFrame *parent,
+Methodes::Methodes(wxPanel *parent,
                    std::map<std::string, std::vector<std::string> > methodesListe) :
-    wxTreeCtrl(parent, -1, wxPoint(-1, -1), wxSize(90, 100), wxTR_HAS_BUTTONS),
+    wxTreeCtrl(parent, -1, wxPoint(-1, -1), wxSize(-1, -1),
+    wxTR_HAS_BUTTONS),
     methodesListe(methodesListe)
 {
 
@@ -53,8 +63,6 @@ Methodes::Methodes(wxFrame *parent,
     {
       wxTreeItemId truc = this->AppendItem(catego, methode, -1, -1,
                                            new MyTreeItemData(methode));
-      auto lastC = this->GetLastChild(truc);
-      //truc.
       Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
               wxTreeEventHandler(Methodes::OnTreeClick));
 //      Bind(wxEVT_TREE_ITEM_ACTIVATED, [methode, this](wxTreeEvent & event)
@@ -81,17 +89,26 @@ Methodes::Methodes(wxFrame *parent,
 void Methodes::OnTreeClick(wxTreeEvent & event)
 {
 
+
   wxTreeItemId itemId = event.GetItem();
   if (GetItemData(itemId))
   {
     MyTreeItemData *item = dynamic_cast<MyTreeItemData *>(GetItemData(itemId)); //on recupere l'item(avec une description)
-    Editor *comm = (Editor *)this->GetParent(); //on recupere l'editeur
-    wxTextCtrl *text = comm->getEdit()->getText(); //on recupere la zone de texte
-    *text << item->GetDesc() << "\n";
+    Editor *comm = (Editor *)this->GetParent()->GetParent(); //on recupere l'editeur
+    std::string meth = item->GetDesc().ToStdString();
+    comm->writeMet(meth);
   }
   else
   {
-    this->Expand(itemId);
+    if (IsExpanded(itemId))
+    {
+      Collapse(itemId);
+      std::cout << "wallah" << std::endl;
+    }
+    else
+    {
+      this->Expand(itemId);
+    }
   }
 }
 

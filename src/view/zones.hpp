@@ -12,6 +12,7 @@ class Edit : public wxPanel
 {
 public:
   Edit(wxFrame *parent);
+  Edit(wxPanel *parent);
 
   //----------------------------------
   //les elements
@@ -29,8 +30,7 @@ class Methodes : public wxTreeCtrl
 {
 public:
 
-  Methodes(wxFrame *parent, std::map<std::string, std::vector<std::string> > methodesListe);
-
+  Methodes(wxPanel *parent, std::map<std::string, std::vector<std::string> > methodesListe);
 
   //----------------------------------
   //les events
