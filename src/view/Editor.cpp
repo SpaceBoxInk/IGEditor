@@ -43,9 +43,9 @@ Editor::Editor(wxString const & title) :
   SetIcon(wxIcon("src/pictures/icon.png")); //on met le logo sympa
 
   //les boutons
-  hbox3->Add(new wxButton(bouttons, wxID_ADD, wxT("executer"), wxPoint(-1, -1)), 0, wxEXPAND);
-  hbox3->Add(new wxButton(bouttons, wxID_ABORT, wxT("arreter"), wxPoint(-1, -1)), 0, wxEXPAND);
-  hbox3->Add(new wxButton(bouttons, wxID_EXIT, wxT("fermer"), wxPoint(-1, -1)), 0, wxEXPAND);
+  hbox3->Add(new wxButton(bouttons, wxID_ADD, wxT("executer"), wxPoint(-1, -1)), 1, wxEXPAND);
+  hbox3->Add(new wxButton(bouttons, wxID_ABORT, wxT("arreter"), wxPoint(-1, -1)), 1, wxEXPAND);
+  hbox3->Add(new wxButton(bouttons, wxID_EXIT, wxT("fermer"), wxPoint(-1, -1)), 1, wxEXPAND);
 
   Connect(wxID_EXIT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnQuit));
   Connect(wxID_ABORT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnAbort));
