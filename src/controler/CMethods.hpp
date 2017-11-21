@@ -7,17 +7,17 @@
  *      Author: nihil
  */
 
-#ifndef SRC_CONTROLER_CMETHODS_HPP_
-#define SRC_CONTROLER_CMETHODS_HPP_
-
+#pragma once
 #include "../model/MMethodsLoader.hpp"
 
+class Editor;
 
 class CMethods
 {
 //========================>Attributes<========================
 private:
   MMethodsLoader methodsLoader;
+  Editor* ihmEditor;
 //=======================>Constructors<=======================
 public:
   CMethods();
@@ -37,5 +37,3 @@ public:
 private:
 
 };
-
-#endif /* SRC_CONTROLER_CMETHODS_HPP_ */

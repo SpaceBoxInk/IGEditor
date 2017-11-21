@@ -8,6 +8,8 @@
  */
 
 #include "CMethods.hpp"
+#include "../view/Editor.hpp"
+#include <wx/chartype.h>
 
 using namespace std;
 
@@ -22,6 +24,9 @@ using namespace std;
 CMethods::CMethods() :
     methodsLoader("all")
 {
+  ihmEditor = new Editor(wxT("Editeur"));
+  ihmEditor->ajouterMethode(methodsLoader.getListCatMeth());
+  ihmEditor->Show();
 }
 
 CMethods::~CMethods()

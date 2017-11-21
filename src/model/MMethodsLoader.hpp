@@ -44,8 +44,8 @@ private:
   void insertMethod(std::string const& categorie, std::string const& strToParse);
 //=====================>Getters&Setters<======================
 public:
-  std::map<std::string, std::vector<std::string>> const& getListCatMeth();
-  std::map<std::string, std::string> const& getListMNameMBody();
+  std::map<std::string, std::vector<std::string>> const& getListCatMeth() const;
+  std::map<std::string, std::string> const& getListMNameMBody() const;
 
 private:
 

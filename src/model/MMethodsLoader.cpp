@@ -129,4 +129,17 @@ void MMethodsLoader::insertMethod(std::string const & categorie, std::string con
   methodsListCatMEt[categorie].push_back(methodName.str());
   methodsListMNameMBody[methodName.str()] = methodBody;
 }
+//------------------------------------------------------------
+//=====================>Getters&Setters<======================
+//------------------------------------------------------------
+
+std::map<std::string, std::vector<std::string> > const & MMethodsLoader::getListCatMeth() const
+{
+  return methodsListCatMEt;
+}
+
+std::map<std::string, std::string> const & MMethodsLoader::getListMNameMBody() const
+{
+  return methodsListMNameMBody;
+}
 
