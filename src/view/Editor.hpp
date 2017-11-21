@@ -39,8 +39,8 @@ public:
   void OnQuit(wxCommandEvent & event);
   void OnAbort(wxCommandEvent & WXUNUSED(event));
   void OnAdd(wxCommandEvent & WXUNUSED(event));
-  void writeMet(std::string methode);
-  void writeRes(std::string methode);
+  void writeMet(std::string methode, wxColour const* color = wxBLACK);
+  void writeRes(std::string methode, wxColour const* color = wxBLACK);
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();
   //=====================>Getters&Setters<======================

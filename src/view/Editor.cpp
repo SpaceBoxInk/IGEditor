@@ -80,7 +80,6 @@ void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
   printf("%s", "j'arrete\n");
-
 }
 
 /**
@@ -133,20 +132,22 @@ Methodes* Editor::getMethodes() const
  *
  * @param methode
  */
-void Editor::writeMet(std::string methode)
+void Editor::writeMet(std::string methode, wxColour const* color)
 {
   wxTextCtrl* text = getEdit(); //on recupere la zone d'edition
-  *text << methode << "\n"; //on ajoute la methode à l'editeur
+  text->SetDefaultStyle(wxTextAttr(*color));
+  text->AppendText(methode);
 }
 
 /**
  *
  * @param retur
  */
-void Editor::writeRes(std::string retur)
+void Editor::writeRes(std::string retur, wxColour const* color)
 {
   wxTextCtrl* text = getRes(); //on recupere la zone de retour
-  *text << retur << "\n"; //on ajoute le retour à l'editeur
+  text->SetDefaultStyle(wxTextAttr(*color));
+  text->AppendText(retur);
 }
 void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > liste)
 {
