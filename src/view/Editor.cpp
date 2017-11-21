@@ -41,8 +41,7 @@ Editor::Editor(wxString const & title) :
   wxTE_MULTILINE,
                          wxDefaultValidator, wxTextCtrlNameStr);
 
-  // TODO : icon
-//  SetIcon(wxIcon(MParameters::getConfPath() + "src/pictures/icon.png")); //on met le logo sympa
+  SetIcon(wxIcon(MParameters::rootPath + "/pictures/icon.png")); //on met le logo sympa
 
   //les boutons
   hbox3->Add(new wxButton(bouttons, wxID_ADD, wxT("executer"), wxPoint(-1, -1)), 1, wxEXPAND);
@@ -52,7 +51,8 @@ Editor::Editor(wxString const & title) :
   Connect(wxID_EXIT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnQuit));
   Connect(wxID_ABORT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnAbort));
   Connect(wxID_ADD, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnAdd));
-
+  Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
+          wxTreeEventHandler(Methodes::OnTreeClick));
   //la zone du bas
   hbox2->Add(m_res, 3, wxEXPAND);
   hbox2->Add(bouttons, 1, wxEXPAND);
@@ -151,6 +151,7 @@ void Editor::writeRes(std::string retur, wxColour const* color)
   text->SetDefaultStyle(wxTextAttr(*color));
   text->AppendText(retur);
 }
+
 void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > liste)
 {
   supprimerMethodes();
@@ -160,14 +161,13 @@ void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > lis
     wxTreeItemId catego = m_methode->AppendItem(categor, categorie.first, -1, -1, nullptr);
     for (std::string methode : categorie.second)
     {
-      wxTreeItemId truc = m_methode->AppendItem(catego, methode, -1, -1,
-                                                new MyTreeItemData(methode));
-      Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
-              wxTreeEventHandler(Methodes::OnTreeClick));
+      // wxTreeItemId truc =
+      m_methode->AppendItem(catego, methode, -1, -1, new MyTreeItemData(methode));
     }
   }
   m_methode->Expand(categor);
 }
+
 void Editor::supprimerMethodes()
 {
   m_methode->CollapseAndReset(m_methode->GetRootItem());

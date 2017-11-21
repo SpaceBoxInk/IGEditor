@@ -24,15 +24,27 @@ using namespace std;
 CMethods::CMethods() :
     methodsLoader("all")
 {
+  addEvents();
+
+  // IHM init
   ihmEditor = new Editor(wxT("Editeur"));
-  ihmEditor->ajouterMethode(methodsLoader.getListCatMeth());
   ihmEditor->Show();
+  ihmEditor->ajouterMethode(methodsLoader.getListCatMeth());
 }
 
 CMethods::~CMethods()
 {
 }
 
+void CMethods::addEvents()
+{
+  // Action pour quand l'utilisateur clic sur une methode fournie
+  // dans l'arbre
+  addAction<Event, string>(Event::METHOD_INPUT, [this](string const& content, Observed const&)
+  {
+    ihmEditor->writeMet(methodsLoader.getMethod(content));
+  });
+}
 //------------------------------------------------------------
 //=====================>Getters&Setters<======================
 //------------------------------------------------------------

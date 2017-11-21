@@ -5,6 +5,9 @@
 #include <vector>
 #include <map>
 #include <wx/treectrl.h>
+
+#include "../tools/observerPattern/Observed.hpp"
+
 /**
  * la zone d'edition
  */
@@ -26,7 +29,7 @@ public:
 /**
  * zone qui contient les methodes
  */
-class Methodes : public wxTreeCtrl
+class Methodes : public wxTreeCtrl, public Observed
 {
 public:
 

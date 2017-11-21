@@ -32,7 +32,7 @@ private:
 //=========================>Methods<==========================
 public:
   void loadMethods(std::string const& section);
-
+  std::string getMethod(std::string methodeName) const;
 
 private:
   void clearMethods();

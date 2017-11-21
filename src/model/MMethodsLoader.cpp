@@ -43,6 +43,12 @@ void MMethodsLoader::loadMethods(std::string const & section)
   readSection(f);
 }
 
+std::string MMethodsLoader::getMethod(std::string methodeName) const
+{
+  return methodsListMNameMBody.at(methodeName);
+}
+
+
 void MMethodsLoader::clearMethods()
 {
   methodsListCatMEt.clear();
@@ -142,4 +148,3 @@ std::map<std::string, std::string> const & MMethodsLoader::getListMNameMBody() c
 {
   return methodsListMNameMBody;
 }
-

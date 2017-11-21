@@ -1,18 +1,19 @@
 #include "zones.hpp"
 
-#include <wx/defs.h>
-#include <wx/event.h>
-#include <wx/gdicmn.h>
-#include <wx/gtk/textctrl.h>
-#include <wx/string.h>
-#include <wx/stringimpl.h>
-#include <wx/textctrl.h>
-#include <wx/treebase.h>
-#include <wx/validate.h>
-#include <wx/window.h>
+//#include <wx/defs.h>
+//#include <wx/event.h>
+//#include <wx/gdicmn.h>
+//#include <wx/gtk/textctrl.h>
+//#include <wx/string.h>
+//#include <wx/stringimpl.h>
+//#include <wx/textctrl.h>
+//#include <wx/treebase.h>
+//#include <wx/validate.h>
+//#include <wx/window.h>
 #include <utility>
 
 #include "Editor.hpp"
+#include "../controler/CMethods.hpp"
 
 /**
  *constructeur de la zone d'edition
@@ -31,7 +32,7 @@ Edit::Edit(wxPanel *parent) :
 {
   text = new wxTextCtrl(parent, -1, wxEmptyString, wxPoint(parent->GetSize().x / 2, -1),
                         wxSize(-1, -1),
-  wxTE_MULTILINE,
+                        wxTE_MULTILINE,
                         wxDefaultValidator, wxTextCtrlNameStr);
 }
 
@@ -53,7 +54,6 @@ Methodes::Methodes(wxPanel *parent) :
     wxTR_HAS_BUTTONS)
 {
 
-
   wxTreeItemId categor = this->AddRoot("Fonctions", -1, -1, nullptr);
   this->Expand(categor);
 }
@@ -66,14 +66,16 @@ Methodes::Methodes(wxPanel *parent) :
 void Methodes::OnTreeClick(wxTreeEvent & event)
 {
 
-
   wxTreeItemId itemId = event.GetItem();
-  if (GetItemData(itemId))
+  if (itemId.m_pItem)
   {
+    std::cout << '\n' << typeid(itemId.m_pItem).name() << '\n';
     MyTreeItemData *item = dynamic_cast<MyTreeItemData *>(GetItemData(itemId)); //on recupere l'item(avec une description)
-    Editor *comm = (Editor *)this->GetParent()->GetParent(); //on recupere l'editeur
     std::string meth = item->GetDesc().ToStdString();
-    comm->writeMet(meth);
+
+    // Envoie du message à l'observeur
+    setChanged();
+    notifyObservers(Event::METHOD_INPUT, meth);
   }
   else
   {

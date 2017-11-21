@@ -8,11 +8,18 @@
  */
 
 #pragma once
+
 #include "../model/MMethodsLoader.hpp"
+#include "../tools/observerPattern/Observer.hpp"
 
 class Editor;
 
-class CMethods
+enum class Event
+{
+  METHOD_INPUT,
+};
+
+class CMethods : public Observer
 {
 //========================>Attributes<========================
 private:
@@ -30,6 +37,7 @@ private:
 public:
 
 private:
+  void addEvents();
 
 //=====================>Getters&Setters<======================
 public:
