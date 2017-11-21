@@ -10,7 +10,6 @@
 //#include <wx/treebase.h>
 //#include <wx/validate.h>
 //#include <wx/window.h>
-#include <utility>
 
 #include "Editor.hpp"
 #include "../controler/CMethods.hpp"
@@ -53,6 +52,8 @@ Methodes::Methodes(wxPanel *parent) :
     wxTreeCtrl(parent, -1, wxPoint(-1, -1), wxSize(-1, -1),
     wxTR_HAS_BUTTONS)
 {
+  Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
+          wxTreeEventHandler(Methodes::OnTreeClick));
 
   wxTreeItemId categor = this->AddRoot("Fonctions", -1, -1, nullptr);
   this->Expand(categor);
@@ -67,9 +68,8 @@ void Methodes::OnTreeClick(wxTreeEvent & event)
 {
 
   wxTreeItemId itemId = event.GetItem();
-  if (itemId.m_pItem)
+  if (GetItemData(itemId))
   {
-    std::cout << '\n' << typeid(itemId.m_pItem).name() << '\n';
     MyTreeItemData *item = dynamic_cast<MyTreeItemData *>(GetItemData(itemId)); //on recupere l'item(avec une description)
     std::string meth = item->GetDesc().ToStdString();
 

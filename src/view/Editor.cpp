@@ -51,8 +51,7 @@ Editor::Editor(wxString const & title) :
   Connect(wxID_EXIT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnQuit));
   Connect(wxID_ABORT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnAbort));
   Connect(wxID_ADD, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Editor::OnAdd));
-  Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
-          wxTreeEventHandler(Methodes::OnTreeClick));
+
   //la zone du bas
   hbox2->Add(m_res, 3, wxEXPAND);
   hbox2->Add(bouttons, 1, wxEXPAND);

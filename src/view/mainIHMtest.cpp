@@ -18,6 +18,6 @@ bool MyApp::OnInit()
   string str(wStr.begin(), wStr.end());
   MParameters::load(str);
 
-  CMethods();
+  new CMethods();
   return true;
 }

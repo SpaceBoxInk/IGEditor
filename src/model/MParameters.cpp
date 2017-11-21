@@ -43,7 +43,7 @@ std::string MParameters::getConfPath()
   return rootPath + configFile;
 }
 
-void MParameters::load(std::string const & exePath)
+void MParameters::load(std::string exePath)
 {
   rootPath = exePath.substr(0, exePath.rfind('/') + 1);
   setRootPath();

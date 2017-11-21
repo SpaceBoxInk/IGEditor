@@ -44,5 +44,5 @@ public:
 
   static std::string getConfPath();
 
-  static void load(std::string const & exePath);
+  static void load(std::string exePath);
 };
