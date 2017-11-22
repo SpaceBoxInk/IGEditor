@@ -12,6 +12,7 @@
 #include <wx/wx.h>
 #include "Editor.hpp"
 #include "../model/MParameters.hpp"
+#include "../controler/CMethods.hpp"
 
 /**
  *
@@ -41,7 +42,7 @@ Editor::Editor(wxString const & title) :
   wxTE_MULTILINE,
                          wxDefaultValidator, wxTextCtrlNameStr);
 
-  SetIcon(wxIcon(MParameters::rootPath + "/pictures/icon.png")); //on met le logo sympa
+  SetIcon(wxIcon(MParameters::getRootPath() + "/pictures/icon.png")); //on met le logo sympa
 
   //les boutons
   hbox3->Add(new wxButton(bouttons, wxID_ADD, wxT("executer"), wxPoint(-1, -1)), 1, wxEXPAND);
@@ -90,10 +91,8 @@ void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
-  printf("%s", "j'execute\n");
-  std::string mot;
-  getMot(mot);
-  std::cout << mot << std::endl;
+  setChanged();
+  notifyObservers(Event::EXECUTE_EDITOR, getEdit()->GetValue().ToStdString());
 }
 
 /**
@@ -102,6 +101,8 @@ void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
  */
 void Editor::OnQuit(wxCommandEvent & WXUNUSED(event))
 {
+  setChanged();
+  notifyObservers(Event::SAVE_AND_CLOSE_EDITOR, getEdit()->GetValue().ToStdString());
   Close(true);
 }
 
@@ -202,6 +203,12 @@ void Editor::writeRes(std::string retur, wxColour const* color)
   wxTextCtrl* text = getRes(); //on recupere la zone de retour
   text->SetDefaultStyle(wxTextAttr(*color));
   text->AppendText(retur);
+}
+
+void Editor::clearRes()
+{
+  wxTextCtrl* text = getRes(); //on recupere la zone de retour
+  text->Clear();
 }
 
 void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > liste)

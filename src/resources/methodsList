@@ -1,10 +1,24 @@
-all{
+allFr{
   Controle {
     si  __ ::= si $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
     si  __  sinon ::= si $[condition] alors$[nl]$[tab]$[nl]sinon$[nl]$[tab]$[nl]finSi$[nl]
     si  __  sinonSi  __ ::= si $[condition] alors$[nl]$[tab]$[nl]sinonSi $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
-    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
-    repeter tantque  __ ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
+    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeterN$[nl]
+    repeter __ jusqua  __ ::= repeter$[nl]$[tab]$[cursor]$[nl]jusqua $[condition]$[nl]
+  }
+  Mouvement {
+    avancerDe ::= avancerDe($[cursor])$[nl]
+    avancer ::= avancer()$[nl]$[cursor]
+  }
+}
+
+allEn{
+  Controle {
+    if  __ ::= if $[condition] then$[nl]$[tab]$[nl]end$[nl]
+    if  __  else ::= if $[condition] then$[nl]$[tab]$[nl]else$[nl]$[tab]$[nl]end$[nl]
+    if  __  elseif  __ ::= if $[condition] alors$[nl]$[tab]$[nl]sinonSi $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
+    for number in 1 to n ::= for number=1,$[limit] do$[nl]$[tab]$[cursor]$[nl]end$[nl]
+    repeat __ until __ ::= repeat$[nl]$[tab]$[cursor]$[nl]until $[condition]$[nl]
   }
   Mouvement {
     avancerDe ::= avancerDe($[cursor])$[nl]

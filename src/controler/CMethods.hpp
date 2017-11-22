@@ -9,14 +9,21 @@
 
 #pragma once
 
+#include "../model/MLuaInterpreter.hpp"
 #include "../model/MMethodsLoader.hpp"
+#include "../model/MSave.hpp"
 #include "../tools/observerPattern/Observer.hpp"
+
+#include <wx/textctrl.h>
+#include <string>
 
 class Editor;
 
 enum class Event
 {
   METHOD_INPUT,
+  SAVE_AND_CLOSE_EDITOR,
+  EXECUTE_EDITOR,
 };
 
 class CMethods : public Observer
@@ -24,6 +31,8 @@ class CMethods : public Observer
 //========================>Attributes<========================
 private:
   MMethodsLoader methodsLoader;
+  MSave save;
+  MLuaInterpreter luaInterpreter;
   Editor* ihmEditor;
 //=======================>Constructors<=======================
 public:
@@ -39,7 +48,7 @@ public:
 private:
   void addEvents();
 
-  void formatMethod(std::string& method);
+  wxTextCoord formatMethod(std::string& method, std::vector<wxTextCoord> & wordRepCoord);
 //=====================>Getters&Setters<======================
 public:
 

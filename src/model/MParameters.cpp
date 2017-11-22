@@ -5,6 +5,7 @@
 #include <iostream>
 
 std::string MParameters::rootPath;
+std::string MParameters::programsPath;
 std::string MParameters::methodsListFile;
 
 
@@ -33,6 +34,16 @@ void MParameters::setRootPath()
         }
 }
 
+std::string const & MParameters::getRootPath()
+{
+  return rootPath;
+}
+
+std::string MParameters::getProgramsPath()
+{
+  return rootPath + programsPath;
+}
+
 std::string MParameters::getMethodsPath()
 {
   return rootPath + methodsListFile;
@@ -47,6 +58,7 @@ void MParameters::load(std::string exePath)
 {
   rootPath = exePath.substr(0, exePath.rfind('/') + 1);
   setRootPath();
+
   std::map < std::string, std::string > conf;
   // load file
   std::ifstream file;
@@ -77,4 +89,5 @@ void MParameters::load(std::string exePath)
   //=========================================================================================
   // set configurations
   methodsListFile = conf["methodsListFile"];
+  programsPath = conf["programsPath"];
 }

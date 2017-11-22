@@ -15,7 +15,7 @@ class Methodes;
 /**
  * classe principale de l'editeur qui contient une zone d'edition, de methodes, de retour et 3 boutons
  */
-class Editor : public wxFrame
+class Editor : public wxFrame, public Observed
 {
 private:
   //========================>Attributes<========================
@@ -44,6 +44,7 @@ public:
 
   void writeMet(std::string methode, wxColour const* color = getDefaultColor());
   void writeRes(std::string methode, wxColour const* color = getDefaultColor());
+  void clearRes();
 
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();

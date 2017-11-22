@@ -28,8 +28,10 @@ enum class Lang
 class MParameters
 {
 //========================>Constant<========================
-public:
+private:
+
   static std::string rootPath;
+  static std::string programsPath;
   static auto constexpr configFile = "SbiEditor.conf";
   static std::string methodsListFile;
 
@@ -40,6 +42,10 @@ private:
   static void setRootPath();
 
 public:
+  static std::string const& getRootPath();
+
+  static std::string getProgramsPath();
+
   static std::string getMethodsPath();
 
   static std::string getConfPath();
