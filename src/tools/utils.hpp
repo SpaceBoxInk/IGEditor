@@ -24,4 +24,4 @@ enum class LogType
 std::ostream& operator<<(std::ostream& output, LogType const& var);
 
 std::string trim(std::string const& str);
-void printLog(std::string const& log, LogType logT);
+void printLog(std::string const& log, LogType logT = LogType::DEBUG);

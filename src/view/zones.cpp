@@ -76,13 +76,13 @@ void Methodes::OnTreeClick(wxTreeEvent & event)
     // Envoie du message à l'observeur
     setChanged();
     notifyObservers(Event::METHOD_INPUT, meth);
+    UnselectAll(); // plus jolie après avoir écrit
   }
   else
   {
     if (IsExpanded(itemId))
     {
       Collapse(itemId);
-      std::cout << "wallah" << std::endl;
     }
     else
     {

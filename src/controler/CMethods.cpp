@@ -9,12 +9,13 @@
 
 #include "CMethods.hpp"
 
+#include "../tools/utils.hpp"
 #include "../view/Editor.hpp"
 #include "../view/zones.hpp"
-#include "../tools/observerPattern/Observed.hpp"
 
 #include <wx/chartype.h>
 #include <map>
+#include <regex>
 #include <string>
 
 using namespace std;
@@ -43,14 +44,28 @@ CMethods::~CMethods()
 {
 }
 
+
 void CMethods::addEvents()
 {
   // Action pour quand l'utilisateur clic sur une methode fournie
   // dans l'arbre
-  addAction<Event, string>(Event::METHOD_INPUT, [&](string content, Observed const&)->void
+  addAction<Event, string>(Event::METHOD_INPUT, [&](string content, Observed const&) -> void
   {
-    ihmEditor->writeMet(methodsLoader.getMethod(content));
+    string method = methodsLoader.getMethod(content);
+    formatMethod(method);
+    ihmEditor->writeMet(method);
   });
+}
+
+void CMethods::formatMethod(std::string& method)
+{
+  printLog("Parsing : " + method);
+  regex reNl("\\$\\[nl\\]");
+  regex reTab("\\$\\[tab\\]");
+  method = regex_replace(method, reNl, "\n");
+  method = regex_replace(method, reTab, "\t");
+
+  printLog("Transformation : " + method);
 }
 //------------------------------------------------------------
 //=====================>Getters&Setters<======================

@@ -39,6 +39,7 @@ public:
 private:
   void addEvents();
 
+  void formatMethod(std::string& method);
 //=====================>Getters&Setters<======================
 public:
 

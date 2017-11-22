@@ -18,7 +18,7 @@
  * @param title
  */
 Editor::Editor(wxString const & title) :
-    wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(500, 300))
+    wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(830, 600))
 {
   this->SetMinSize(wxSize(500, 300)); //la taille minimum
 
@@ -136,8 +136,13 @@ Methodes* Editor::getMethodes() const
 void Editor::writeMet(std::string methode, wxColour const* color)
 {
   wxTextCtrl* text = getEdit(); //on recupere la zone d'edition
-  text->SetDefaultStyle(wxTextAttr(*color));
-  text->AppendText(methode);
+  wxTextAttr att = wxTextAttr(*color);
+  att.SetAlignment(wxTextAttrAlignment::wxTEXT_ALIGNMENT_JUSTIFIED);
+  text->SetDefaultStyle(att);
+
+  text->WriteText(methode);
+//  text->AppendText(methode);
+  text->SetFocus(); // SEE : pratique ;) pour donner le focus au texte après les methodes
 }
 
 /**
@@ -170,4 +175,10 @@ void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > lis
 void Editor::supprimerMethodes()
 {
   m_methode->CollapseAndReset(m_methode->GetRootItem());
+}
+
+wxColour const * Editor::getDefaultColor()
+{
+  static auto defCol = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOWTEXT);
+  return &defCol;
 }

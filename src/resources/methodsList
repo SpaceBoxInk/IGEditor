@@ -1,9 +1,14 @@
 all{
   Controle {
-    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter
+    si  __ ::= si $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
+    si  __  sinon ::= si $[condition] alors$[nl]$[tab]$[nl]sinon$[nl]$[tab]$[nl]finSi$[nl]
+    si  __  sinonSi  __ ::= si $[condition] alors$[nl]$[tab]$[nl]sinonSi $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
+    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
+    repeter tantque  __ ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
   }
   Mouvement {
-    avancer ::= avancerDe($[cursor])$[nl]
+    avancerDe ::= avancerDe($[cursor])$[nl]
+    avancer ::= avancer()$[nl]$[cursor]
   }
 }
 
