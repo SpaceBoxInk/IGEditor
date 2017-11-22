@@ -90,6 +90,9 @@ void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
   printf("%s", "j'execute\n");
+  std::string mot;
+  getMot(mot);
+  std::cout << mot << std::endl;
 }
 
 /**
@@ -118,6 +121,51 @@ wxTextCtrl* Editor::getEdit() const
 {
   return m_edit;
 }
+
+/**
+ *
+ * @param pos la position que l'on veut
+ * @return le caractere à la position pour 0 -> 'c' :c'est
+ */
+char Editor::getChar(wxTextCoord pos)
+{
+  if (pos >= 0)
+  {
+    return m_edit->GetRange(pos, pos + 1).ToStdString()[0];
+  }
+  return 0;
+}
+
+/**
+ *
+ */
+wxTextCoord* Editor::getMot(std::string& mot)
+{
+  long point = m_edit->GetInsertionPoint();
+  long pointp = point;
+  long pointm = point - 1;
+  char c = getChar(pointp);
+  while (isalnum(c) || c == '_') //on pushback la lettre suivante
+  {
+    mot.push_back(c);
+    ++pointp;
+    c = getChar(pointp);
+  } //on a fini les caracteres suivants
+  //on fait le même chose avec les lettre devant la position initiale
+
+  c = getChar(pointm);
+  while ((isalnum(c) || c == '_')) //on pushback la lettre precedente
+  {
+    mot = c + mot;
+    --pointm;
+    c = getChar(pointm);
+  }
+  wxTextCoord* range = new wxTextCoord[2];
+  range[0] = pointm;
+  range[1] = pointp;
+  return range;
+}
+
 
 /**
  *
@@ -166,6 +214,7 @@ void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > lis
   }
   m_methode->Expand(categor);
 }
+
 void Editor::supprimerMethodes()
 {
   m_methode->CollapseAndReset(m_methode->GetRootItem());

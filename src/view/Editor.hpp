@@ -43,6 +43,9 @@ public:
   void writeRes(std::string methode, wxColour const* color = wxBLACK);
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();
+
+  char getChar(wxTextCoord pos);
+  wxTextCoord* getMot(std::string& motRet);
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
   wxTextCtrl* getRes() const;
