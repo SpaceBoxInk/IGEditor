@@ -128,7 +128,7 @@ wxTextCtrl* Editor::getEdit() const
  * @param pos la position que l'on veut
  * @return le caractere à la position pour 0 -> 'c' :c'est
  */
-char Editor::getChar(wxTextCoord pos)
+char Editor::getChar(wxTextCoord pos) const
 {
   if (pos >= 0)
   {
@@ -140,7 +140,7 @@ char Editor::getChar(wxTextCoord pos)
 /**
  *
  */
-wxTextCoord* Editor::getMot(std::string& mot)
+wxTextCoord* Editor::getMot(std::string& mot) const
 {
   long point = m_edit->GetInsertionPoint();
   long pointp = point;

@@ -48,8 +48,8 @@ public:
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();
 
-  char getChar(wxTextCoord pos);
-  wxTextCoord* getMot(std::string& motRet);
+  char getChar(wxTextCoord pos) const;
+  wxTextCoord* getMot(std::string& motRet) const;
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
   wxTextCtrl* getRes() const;
