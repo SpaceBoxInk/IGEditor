@@ -12,6 +12,7 @@
 #include <wx/wx.h>
 #include "Editor.hpp"
 #include "../model/MParameters.hpp"
+#include "../tools/utils.hpp"
 
 /**
  *
@@ -34,12 +35,11 @@ Editor::Editor(wxString const & title) :
   wxPanel *bouttons = new wxPanel(bas); //le panel des boutons
 
   m_methode = new Methodes(haut);
-  m_edit = new wxTextCtrl(haut, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-  wxTE_MULTILINE,
-                          wxDefaultValidator, wxTextCtrlNameStr);
+  m_edit = new wxTextCtrl(haut, wxID_EDIT, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
+                          wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+  Connect(wxID_EDIT, wxEVT_TEXT, wxCommandEventHandler(Editor::OnChange));
   m_res = new wxTextCtrl(bas, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-  wxTE_MULTILINE,
-                         wxDefaultValidator, wxTextCtrlNameStr);
+                         wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
 
   SetIcon(wxIcon(MParameters::rootPath + "/pictures/icon.png")); //on met le logo sympa
 
@@ -80,7 +80,6 @@ Editor::Editor(wxString const & title) :
 void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
-  printf("%s", "j'arrete\n");
 }
 
 /**
@@ -90,12 +89,18 @@ void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
-  printf("%s", "j'execute\n");
   std::string mot;
   getMot(mot);
   std::cout << mot << std::endl;
 }
-
+/**
+ *
+ * @param
+ */
+void Editor::OnChange(wxCommandEvent& event)
+{
+  printLog("j'appuie sur une lettre", LogType::DEBUG);
+}
 /**
  *
  * @param
@@ -230,3 +235,4 @@ wxColour const * Editor::getDefaultColor()
   static auto defCol = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOWTEXT);
   return &defCol;
 }
+

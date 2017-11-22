@@ -31,6 +31,10 @@ private:
    *
    */
   Methodes *m_methode;
+  /**
+   *
+   */
+  std::string motCourant; //sert a rien
 
   static wxColour const* getDefaultColor();
 public:
@@ -50,6 +54,7 @@ public:
 
   char getChar(wxTextCoord pos) const;
   wxTextCoord* getMot(std::string& motRet) const;
+  void OnChange(wxCommandEvent& event);
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
   wxTextCtrl* getRes() const;
