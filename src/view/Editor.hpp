@@ -5,9 +5,9 @@
  *      Author: lordofkawaiii
  */
 
-#include <wx/event.h>
-#include <wx/gtk/frame.h>
-#include <wx/string.h>
+#pragma once
+#include <wx/wx.h>
+#include <wx/settings.h>
 #include "zones.hpp"
 class Edit;
 class Methodes;
@@ -31,6 +31,8 @@ private:
    *
    */
   Methodes *m_methode;
+
+  static wxColour const* getDefaultColor();
 public:
   //=======================>Constructors<=======================
   Editor(wxString const & title);
@@ -39,8 +41,10 @@ public:
   void OnQuit(wxCommandEvent & event);
   void OnAbort(wxCommandEvent & WXUNUSED(event));
   void OnAdd(wxCommandEvent & WXUNUSED(event));
-  void writeMet(std::string methode, wxColour const* color = wxBLACK);
-  void writeRes(std::string methode, wxColour const* color = wxBLACK);
+
+  void writeMet(std::string methode, wxColour const* color = getDefaultColor());
+  void writeRes(std::string methode, wxColour const* color = getDefaultColor());
+
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();
 

@@ -11,13 +11,14 @@
 #include <wx/button.h>
 #include <wx/wx.h>
 #include "Editor.hpp"
+#include "../model/MParameters.hpp"
 
 /**
  *
  * @param title
  */
 Editor::Editor(wxString const & title) :
-    wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(500, 300))
+    wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(830, 600))
 {
   this->SetMinSize(wxSize(500, 300)); //la taille minimum
 
@@ -40,7 +41,7 @@ Editor::Editor(wxString const & title) :
   wxTE_MULTILINE,
                          wxDefaultValidator, wxTextCtrlNameStr);
 
-  SetIcon(wxIcon("src/pictures/icon.png")); //on met le logo sympa
+  SetIcon(wxIcon(MParameters::rootPath + "/pictures/icon.png")); //on met le logo sympa
 
   //les boutons
   hbox3->Add(new wxButton(bouttons, wxID_ADD, wxT("executer"), wxPoint(-1, -1)), 1, wxEXPAND);
@@ -183,8 +184,13 @@ Methodes* Editor::getMethodes() const
 void Editor::writeMet(std::string methode, wxColour const* color)
 {
   wxTextCtrl* text = getEdit(); //on recupere la zone d'edition
-  text->SetDefaultStyle(wxTextAttr(*color));
-  text->AppendText(methode);
+  wxTextAttr att = wxTextAttr(*color);
+  att.SetAlignment(wxTextAttrAlignment::wxTEXT_ALIGNMENT_JUSTIFIED);
+  text->SetDefaultStyle(att);
+
+  text->WriteText(methode);
+//  text->AppendText(methode);
+  text->SetFocus(); // SEE : pratique ;) pour donner le focus au texte après les methodes
 }
 
 /**
@@ -197,6 +203,7 @@ void Editor::writeRes(std::string retur, wxColour const* color)
   text->SetDefaultStyle(wxTextAttr(*color));
   text->AppendText(retur);
 }
+
 void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > liste)
 {
   supprimerMethodes();
@@ -206,10 +213,8 @@ void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > lis
     wxTreeItemId catego = m_methode->AppendItem(categor, categorie.first, -1, -1, nullptr);
     for (std::string methode : categorie.second)
     {
-      wxTreeItemId truc = m_methode->AppendItem(catego, methode, -1, -1,
-                                                new MyTreeItemData(methode));
-      Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
-              wxTreeEventHandler(Methodes::OnTreeClick));
+      // wxTreeItemId truc =
+      m_methode->AppendItem(catego, methode, -1, -1, new MyTreeItemData(methode));
     }
   }
   m_methode->Expand(categor);
@@ -218,4 +223,10 @@ void Editor::ajouterMethode(std::map<std::string, std::vector<std::string> > lis
 void Editor::supprimerMethodes()
 {
   m_methode->CollapseAndReset(m_methode->GetRootItem());
+}
+
+wxColour const * Editor::getDefaultColor()
+{
+  static auto defCol = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOWTEXT);
+  return &defCol;
 }

@@ -1,18 +1,18 @@
 #include "zones.hpp"
 
-#include <wx/defs.h>
-#include <wx/event.h>
-#include <wx/gdicmn.h>
-#include <wx/gtk/textctrl.h>
-#include <wx/string.h>
-#include <wx/stringimpl.h>
-#include <wx/textctrl.h>
-#include <wx/treebase.h>
-#include <wx/validate.h>
-#include <wx/window.h>
-#include <utility>
+//#include <wx/defs.h>
+//#include <wx/event.h>
+//#include <wx/gdicmn.h>
+//#include <wx/gtk/textctrl.h>
+//#include <wx/string.h>
+//#include <wx/stringimpl.h>
+//#include <wx/textctrl.h>
+//#include <wx/treebase.h>
+//#include <wx/validate.h>
+//#include <wx/window.h>
 
 #include "Editor.hpp"
+#include "../controler/CMethods.hpp"
 
 /**
  *constructeur de la zone d'edition
@@ -31,7 +31,7 @@ Edit::Edit(wxPanel *parent) :
 {
   text = new wxTextCtrl(parent, -1, wxEmptyString, wxPoint(parent->GetSize().x / 2, -1),
                         wxSize(-1, -1),
-  wxTE_MULTILINE,
+                        wxTE_MULTILINE,
                         wxDefaultValidator, wxTextCtrlNameStr);
 }
 
@@ -52,7 +52,8 @@ Methodes::Methodes(wxPanel *parent) :
     wxTreeCtrl(parent, -1, wxPoint(-1, -1), wxSize(-1, -1),
     wxTR_HAS_BUTTONS)
 {
-
+  Connect(wxID_ANY, wxID_ANY, wxEVT_TREE_ITEM_ACTIVATED,
+          wxTreeEventHandler(Methodes::OnTreeClick));
 
   wxTreeItemId categor = this->AddRoot("Fonctions", -1, -1, nullptr);
   this->Expand(categor);
@@ -66,21 +67,22 @@ Methodes::Methodes(wxPanel *parent) :
 void Methodes::OnTreeClick(wxTreeEvent & event)
 {
 
-
   wxTreeItemId itemId = event.GetItem();
   if (GetItemData(itemId))
   {
     MyTreeItemData *item = dynamic_cast<MyTreeItemData *>(GetItemData(itemId)); //on recupere l'item(avec une description)
-    Editor *comm = (Editor *)this->GetParent()->GetParent(); //on recupere l'editeur
     std::string meth = item->GetDesc().ToStdString();
-    comm->writeMet(meth);
+
+    // Envoie du message à l'observeur
+    setChanged();
+    notifyObservers(Event::METHOD_INPUT, meth);
+    UnselectAll(); // plus jolie après avoir écrit
   }
   else
   {
     if (IsExpanded(itemId))
     {
       Collapse(itemId);
-      std::cout << "wallah" << std::endl;
     }
     else
     {

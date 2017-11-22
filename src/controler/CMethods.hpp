@@ -1,25 +1,35 @@
 /**
- * MethodsLoader.hpp
+ * CMethods.hpp
  *
  * Early optimization is the root of all evil
  *
- *  Created on: 25 oct. 2017
+ *  Created on: 5 nov. 2017
  *      Author: nihil
  */
 
-#ifndef MODEL_METHODSLOADER_HPP_
-#define MODEL_METHODSLOADER_HPP_
+#pragma once
 
-class MethodsLoader
+#include "../model/MMethodsLoader.hpp"
+#include "../tools/observerPattern/Observer.hpp"
+
+class Editor;
+
+enum class Event
+{
+  METHOD_INPUT,
+};
+
+class CMethods : public Observer
 {
 //========================>Attributes<========================
 private:
-
+  MMethodsLoader methodsLoader;
+  Editor* ihmEditor;
 //=======================>Constructors<=======================
 public:
-  MethodsLoader();
+  CMethods();
   // TODO: rule of five ? copyandswap
-  virtual ~MethodsLoader();
+  virtual ~CMethods();
 
 private:
 
@@ -27,12 +37,12 @@ private:
 public:
 
 private:
+  void addEvents();
 
+  void formatMethod(std::string& method);
 //=====================>Getters&Setters<======================
 public:
 
 private:
 
 };
-
-#endif /* MODEL_METHODSLOADER_HPP_ */
