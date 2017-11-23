@@ -36,12 +36,11 @@ Editor::Editor(wxString const & title) :
   wxPanel *bouttons = new wxPanel(bas); //le panel des boutons
 
   m_methode = new Methodes(haut);
-  m_edit = new wxTextCtrl(haut, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-  wxTE_MULTILINE,
-                          wxDefaultValidator, wxTextCtrlNameStr);
+  m_edit = new wxTextCtrl(haut, wxID_EDIT, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
+                          wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+  Connect(wxID_EDIT, wxEVT_TEXT, wxCommandEventHandler(Editor::OnChange));
   m_res = new wxTextCtrl(bas, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-  wxTE_MULTILINE,
-                         wxDefaultValidator, wxTextCtrlNameStr);
+                         wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
 
   SetIcon(wxIcon(MParameters::getRootPath() + "/pictures/icon.png")); //on met le logo sympa
 
@@ -82,7 +81,6 @@ Editor::Editor(wxString const & title) :
 void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 {
   //TODO
-  printf("%s", "j'arrete\n");
 }
 
 /**
@@ -91,11 +89,17 @@ void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
  */
 void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 {
-  //TODO
   setChanged();
   notifyObservers(Event::EXECUTE_EDITOR, getEdit()->GetValue().ToStdString());
 }
-
+/**
+ *
+ * @param
+ */
+void Editor::OnChange(wxCommandEvent& event)
+{
+  printLog("j'appuie sur une lettre", LogType::DEBUG);
+}
 /**
  *
  * @param

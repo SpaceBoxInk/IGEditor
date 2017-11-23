@@ -31,6 +31,10 @@ private:
    *
    */
   Methodes *m_methode;
+  /**
+   *
+   */
+  std::string motCourant; //sert a rien
 
   static wxColour const* getDefaultColor();
 public:
@@ -41,6 +45,7 @@ public:
   void OnQuit(wxCommandEvent & event);
   void OnAbort(wxCommandEvent & WXUNUSED(event));
   void OnAdd(wxCommandEvent & WXUNUSED(event));
+  void OnChange(wxCommandEvent& event);
 
   void writeMet(std::string methode, wxColour const* color = getDefaultColor());
   void writeRes(std::string methode, wxColour const* color = getDefaultColor());
