@@ -89,12 +89,15 @@ void CMethods::addEvents()
 wxTextCoord CMethods::formatMethod(std::string& method, vector<wxTextCoord> & wordRepCoord)
 {
   printLog("Parsing : " + method);
+  regex reNli("\\$\\[nli\\]");
   regex reNl("\\$\\[nl\\]");
   regex reTab("\\$\\[tab\\]");
   regex reCursor("\\$\\[cursor\\]");
   regex reOthers("\\$\\[(\\w|\\d)+\\]");
+  method = regex_replace(method, reNli, "\n" + ihmEditor->getIndentation());
   method = regex_replace(method, reNl, "\n");
   method = regex_replace(method, reTab, "\t");
+  method = regex_replace(method, reCursor, "");
   method = regex_replace(method, reOthers, "_"); //TODO complete for tab ;)
 
   printLog("Transformation : " + method);

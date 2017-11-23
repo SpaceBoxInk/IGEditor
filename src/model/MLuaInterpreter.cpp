@@ -30,12 +30,20 @@ int MLuaInterpreter::avancer(lua_State* l)
   return 0;
 }
 
+int MLuaInterpreter::tournerDe(lua_State* l)
+{
+  int direction = lua_tonumber(l, 1);
+  output << "Tourne de " << direction << " degre" << '\n';
+  return 0;
+}
+
 int MLuaInterpreter::print(lua_State* l)
 {
   for (int i = 1; i <= lua_gettop(l); ++i)
   {
     output << lua_tostring(l, i);
   }
+  output << "\n";
   return 0;
 }
 
@@ -68,6 +76,7 @@ void MLuaInterpreter::registerFonctions()
 {
   lua_register(lua, "avancer", MLuaInterpreter::avancer);
   lua_register(lua, "print", MLuaInterpreter::print);
+  lua_register(lua, "tournerDe", MLuaInterpreter::tournerDe);
 }
 
 //------------------------------------------------------------

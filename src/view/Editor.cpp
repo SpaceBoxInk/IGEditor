@@ -13,6 +13,7 @@
 #include "Editor.hpp"
 #include "../model/MParameters.hpp"
 #include "../controler/CMethods.hpp"
+#include "../tools/utils.hpp"
 
 /**
  *
@@ -236,4 +237,19 @@ wxColour const * Editor::getDefaultColor()
 {
   static auto defCol = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOWTEXT);
   return &defCol;
+}
+
+std::string Editor::getIndentation() const
+{
+  std::string indent;
+  long pos = m_edit->GetInsertionPoint() - 1;
+
+  printLog("Current char : " + std::to_string((int)getChar(pos)), LogType::DEBUG);
+  for (int i = 0; isblank(getChar(pos)); ++i, --pos)
+  {
+    indent += getChar(pos);
+    printLog("Current char : " + getChar(pos), LogType::DEBUG);
+  }
+  printLog("indent size : " + std::to_string(indent.size()), LogType::DEBUG);
+  return indent;
 }

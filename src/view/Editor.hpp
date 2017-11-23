@@ -51,6 +51,7 @@ public:
 
   char getChar(wxTextCoord pos) const;
   wxTextCoord* getMot(std::string& motRet) const;
+  std::string getIndentation() const;
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
   wxTextCtrl* getRes() const;
