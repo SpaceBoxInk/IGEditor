@@ -13,6 +13,7 @@
 #include "Observer.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 #include <vector>
 
@@ -123,6 +124,10 @@ void Observed::notifyObservers(EventName eventName, Content content)
       obs->doEventActions(eventName, content, *this);
     }
   }
+  else
+  {
+    std::cout << "No changes, ignore notify" << '\n';
+  }
   clearChanged();
 }
 
@@ -135,6 +140,10 @@ void Observed::notifyObservers(EventName eventName)
     {
       obs->doEventActions(eventName, *this);
     }
+  }
+  else
+  {
+    std::cout << "No changes, ignore notify" << '\n';
   }
   clearChanged();
 }

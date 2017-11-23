@@ -15,9 +15,9 @@
 enum class LogType
 {
   OK = 32,
-  INFO = 34,
+  INFO = 36,
   WARNING = 33,
-  ERROR = 31,
+  ERROR = 91,
   DEBUG = 5,
 };
 

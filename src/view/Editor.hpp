@@ -15,7 +15,7 @@ class Methodes;
 /**
  * classe principale de l'editeur qui contient une zone d'edition, de methodes, de retour et 3 boutons
  */
-class Editor : public wxFrame
+class Editor : public wxFrame, public Observed
 {
 private:
   //========================>Attributes<========================
@@ -45,16 +45,18 @@ public:
   void OnQuit(wxCommandEvent & event);
   void OnAbort(wxCommandEvent & WXUNUSED(event));
   void OnAdd(wxCommandEvent & WXUNUSED(event));
+  void OnChange(wxCommandEvent& event);
 
   void writeMet(std::string methode, wxColour const* color = getDefaultColor());
   void writeRes(std::string methode, wxColour const* color = getDefaultColor());
+  void clearRes();
 
   void ajouterMethode(std::map<std::string, std::vector<std::string> > liste);
   void supprimerMethodes();
 
   char getChar(wxTextCoord pos) const;
   wxTextCoord* getMot(std::string& motRet) const;
-  void OnChange(wxCommandEvent& event);
+  std::string getIndentation() const;
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
   wxTextCtrl* getRes() const;

@@ -2,10 +2,10 @@
 
 #include "../controler/CMethods.hpp"
 #include "../model/MParameters.hpp"
+#include "../tools/utils.hpp"
 
+#include <bits/exception.h>
 #include <wx/app.h>
-#include <wx/chartype.h>
-#include <sstream>
 #include <string>
 
 IMPLEMENT_APP(MyApp)
@@ -18,6 +18,13 @@ bool MyApp::OnInit()
   string str(wStr.begin(), wStr.end());
   MParameters::load(str);
 
-  new CMethods();
+  try
+  {
+    new CMethods();
+  }
+  catch (exception& e)
+  {
+    printLog(e.what(), LogType::ERROR);
+  }
   return true;
 }

@@ -28,7 +28,7 @@ void printLog(std::string const & log, LogType logT)
 {
   if (logT == LogType::ERROR)
   {
-    std::cerr << "\033[0;" << (int)logT << 'm' << logT << log << "\033[0m" << '\n';
+    std::cerr << "\033[1;" << (int)logT << 'm' << logT << log << "\033[0m" << '\n';
   }
   else
   {

@@ -1,19 +1,33 @@
-all{
+allFr{
   Controle {
-    si  __ ::= si $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
-    si  __  sinon ::= si $[condition] alors$[nl]$[tab]$[nl]sinon$[nl]$[tab]$[nl]finSi$[nl]
-    si  __  sinonSi  __ ::= si $[condition] alors$[nl]$[tab]$[nl]sinonSi $[condition] alors$[nl]$[tab]$[nl]finSi$[nl]
-    repeter n fois ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
-    repeter tantque  __ ::= repeter n fois $[nl]$[tab]$[cursor]$[nl]finRepeter$[nl]
+    si  __ ::= si $[condition] alors $[nli]$[tab]$[cursor] $[nli]finSi $[nl]
+    si  __  sinon ::= si $[condition] alors $[nli]$[tab] $[nli]sinon $[nli]$[tab] $[nli]finSi $[nl]
+    si  __  sinonSi  __ ::= si $[condition] alors $[nli]$[tab] $[nli]sinonSi $[condition] alors $[nli]$[tab] $[nli]finSi $[nl]
+    repeter n fois ::= repeter n fois  $[nli]$[tab]$[cursor] $[nli]finRepeterN $[nl]
+    repeter __ jusqua  __ ::= repeter $[nli]$[tab]$[cursor] $[nli]jusqua $[condition] $[nl]
   }
   Mouvement {
-    avancerDe ::= avancerDe($[cursor])$[nl]
-    avancer ::= avancer()$[nl]$[cursor]
+    avancerDe ::= avancerDe($[cursor]) $[nli]
+    avancer ::= avancer() $[nli]$[cursor]
+  }
+}
+
+allEn{
+  Controle {
+    if  __ ::= if $[condition] then $[nli]$[tab]$[cursor] $[nli]end $[nl]
+    if  __  else ::= if $[condition] then $[nli]$[tab]$[cursor] $[nli]else $[nli]$[tab] $[nli]end $[nl]
+    if  __  elseif  __ ::= if $[condition] then $[nli]$[tab] $[nli]elseif $[condition] then $[nli]$[tab] $[nli]end $[nl]
+    for number in 1 to n ::= for number=1,$[limit] do $[nli]$[tab]$[cursor] $[nli]end $[nl]
+    repeat __ until __ ::= repeat $[nli]$[tab]$[cursor] $[nli]until $[condition] $[nl]
+  }
+  Mouvement {
+    avancerDe ::= avancerDe($[cursor]) $[nl]
+    avancer ::= avancer() $[nl]$[cursor]
   }
 }
 
 level1{
   Mouvement {
-    avancer ::= avancer()$[nl]
+    avancer ::= avancer() $[nl]
   }
 }
