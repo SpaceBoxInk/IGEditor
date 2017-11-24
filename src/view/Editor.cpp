@@ -37,10 +37,16 @@ Editor::Editor(wxString const & title) :
 
   m_methode = new Methodes(haut);
   m_edit = new wxTextCtrl(haut, wxID_EDIT, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-                          wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+  wxTE_MULTILINE,
+                          wxDefaultValidator, wxTextCtrlNameStr);
+
+  wxFont font(wxFontInfo(10).FaceName(MParameters::getFont()));
+
+  m_edit->SetFont(font);
   Connect(wxID_EDIT, wxEVT_TEXT, wxCommandEventHandler(Editor::OnChange));
   m_res = new wxTextCtrl(bas, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
-                         wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+  wxTE_MULTILINE,
+                         wxDefaultValidator, wxTextCtrlNameStr);
 
   SetIcon(wxIcon(MParameters::getRootPath() + "/pictures/icon.png")); //on met le logo sympa
 
@@ -99,6 +105,8 @@ void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 void Editor::OnChange(wxCommandEvent& event)
 {
   printLog("j'appuie sur une lettre", LogType::DEBUG);
+  setChanged();
+  notifyObservers(Event::SYNTAX);
 }
 /**
  *
@@ -168,11 +176,10 @@ wxTextCoord* Editor::getMot(std::string& mot) const
     c = getChar(pointm);
   }
   wxTextCoord* range = new wxTextCoord[2];
-  range[0] = pointm;
+  range[0] = pointm + 1;
   range[1] = pointp;
   return range;
 }
-
 
 /**
  *

@@ -15,6 +15,7 @@
 
 #include <wx/chartype.h>
 #include <map>
+#include <set>
 #include <regex>
 #include <string>
 
@@ -33,6 +34,18 @@ CMethods::CMethods() :
 {
   addEvents();
 
+  listeKey.insert("if");
+  listeKey.insert("then");
+  listeKey.insert("else");
+  listeKey.insert("elseif");
+  listeKey.insert("si");
+  listeKey.insert("end");
+  listeKey.insert("for");
+  listeKey.insert("do");
+  listeKey.insert("sinon");
+  listeKey.insert("finSi");
+  listeKey.insert("wallah");
+
   // IHM init
   ihmEditor = new Editor(wxT("Editeur"));
   ihmEditor->getMethodes()->addObserver(this);
@@ -42,13 +55,12 @@ CMethods::CMethods() :
 
   string loaded;
   save.load(loaded);
-  ihmEditor->writeMet(loaded);
+  writeColoredMet(loaded);
 }
 
 CMethods::~CMethods()
 {
 }
-
 
 void CMethods::addEvents()
 {
@@ -59,7 +71,24 @@ void CMethods::addEvents()
     string method = methodsLoader.getMethod(content);
     vector<wxTextCoord> wordRepList;
     formatMethod(method, wordRepList);
-    ihmEditor->writeMet(method);
+    writeColoredMet(method);
+  });
+
+  addAction<Event>(Event::SYNTAX, [&](Observed const&) -> void
+  {
+    std::string mot;
+
+    wxTextCoord* coo = ihmEditor->getMot(mot);
+    if (listeKey.find(mot) != listeKey.end())
+    {
+      cout << "coords : " << coo[0] << " " << coo[1] << "if passé"<< endl;
+      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)wxColour(0x8b0068));
+    }
+    else
+    {
+      cout << "coords : " << coo[0] << " " << coo[1] << "if pas passé" << endl;
+      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], ihmEditor->getEdit()->GetDefaultStyle());
+    }
   });
 
   addAction<Event, string>(Event::SAVE_AND_CLOSE_EDITOR, [&](string content, Observed const&)
@@ -79,6 +108,38 @@ void CMethods::addEvents()
     luaInterpreter.clearOutput();
   });
 
+}
+
+void CMethods::writeColoredMet(std::string& method)
+{
+  string motCur = "";
+  for (char c : method)
+  {
+    if (isalnum(c))
+    {
+      motCur += c;
+    }
+    else
+    {
+      writeColoredMot(motCur);
+      ihmEditor->writeMet(string() + c);
+      motCur = "";
+    }
+  }
+    writeColoredMot(motCur);
+}
+
+void CMethods::writeColoredMot(std::string& mot)
+{
+  // FIXME : coloration faite 2 fois :/
+  if (listeKey.find(mot) != listeKey.end())
+  {
+    ihmEditor->writeMet(mot, new wxColour(0x8b0068));
+  }
+  else
+  {
+    ihmEditor->writeMet(mot);
+  }
 }
 
 /**
