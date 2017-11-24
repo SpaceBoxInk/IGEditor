@@ -6,6 +6,8 @@
  */
 
 #pragma once
+#define wxUSE_UNICODE 1
+
 #include <wx/wx.h>
 #include <wx/settings.h>
 #include "zones.hpp"

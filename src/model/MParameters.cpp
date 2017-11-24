@@ -8,6 +8,7 @@ std::string MParameters::rootPath;
 std::string MParameters::programsPath;
 std::string MParameters::methodsListFile;
 std::string MParameters::font;
+std::string MParameters::lang;
 
 
 bool MParameters::checkConfFile(std::string path)
@@ -97,4 +98,10 @@ void MParameters::load(std::string exePath)
   methodsListFile = conf["methodsListFile"];
   programsPath = conf["programsPath"];
   font = conf["font"];
+  lang = conf["lang"];
+}
+
+std::string const& MParameters::getLang()
+{
+  return lang;
 }

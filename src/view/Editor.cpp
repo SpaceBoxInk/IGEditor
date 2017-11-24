@@ -15,6 +15,7 @@
 #include "../controler/CMethods.hpp"
 #include "../tools/utils.hpp"
 
+
 /**
  *
  * @param title
@@ -47,6 +48,9 @@ Editor::Editor(wxString const & title) :
   m_res = new wxTextCtrl(bas, -1, wxEmptyString, wxPoint(-1, -1), wxSize(-1, -1),
   wxTE_MULTILINE,
                          wxDefaultValidator, wxTextCtrlNameStr);
+
+//  m_edit->SetFont(wxSystemSettings::GetFont(wxSYS_ANSI_FIXED_FONT));
+  // FIXME : change or do something for encoding
 
   SetIcon(wxIcon(MParameters::getRootPath() + "/pictures/icon.png")); //on met le logo sympa
 
@@ -115,7 +119,9 @@ void Editor::OnChange(wxCommandEvent& event)
 void Editor::OnQuit(wxCommandEvent & WXUNUSED(event))
 {
   setChanged();
-  notifyObservers(Event::SAVE_AND_CLOSE_EDITOR, getEdit()->GetValue().ToStdString());
+  std::stringstream sstr;
+  sstr << getEdit()->GetValue().mb_str(wxConvUTF8);
+  notifyObservers(Event::SAVE_AND_CLOSE_EDITOR, sstr.str());
   Close(true);
 }
 
@@ -199,8 +205,8 @@ void Editor::writeMet(std::string methode, wxColour const* color)
   wxTextCtrl* text = getEdit(); //on recupere la zone d'edition
   wxTextAttr att = wxTextAttr(*color);
   att.SetAlignment(wxTextAttrAlignment::wxTEXT_ALIGNMENT_JUSTIFIED);
+  att.SetFontEncoding(wxFontEncoding::wxFONTENCODING_UTF8);
   text->SetDefaultStyle(att);
-
   text->WriteText(methode);
 //  text->AppendText(methode);
   text->SetFocus(); // SEE : pratique ;) pour donner le focus au texte après les methodes
