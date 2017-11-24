@@ -35,6 +35,7 @@ public:
   void execute(std::string const& exePath);
 
   static int avancer(lua_State* l);
+  static int avancerDe(lua_State* l);
   static int tournerDe(lua_State* l);
   static int print(lua_State* l);
 private:
