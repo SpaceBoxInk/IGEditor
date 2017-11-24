@@ -9,6 +9,9 @@
  */
 
 #include "MLuaInterpreter.hpp"
+#include "MParameters.hpp"
+
+#include "../tools/utils.hpp"
 
 #include <iostream>
 
@@ -30,10 +33,17 @@ int MLuaInterpreter::avancer(lua_State* l)
   return 0;
 }
 
+int MLuaInterpreter::avancerDe(lua_State* l)
+{
+  int n = lua_tonumber(l, 1);
+  output << "Avance de " << n << " case" << '\n';
+  return 0;
+}
+
 int MLuaInterpreter::tournerDe(lua_State* l)
 {
   int direction = lua_tonumber(l, 1);
-  output << "Tourne de " << direction << " degre" << '\n';
+  output << "Tourne de " << direction << " degres" << '\n';
   return 0;
 }
 
@@ -46,7 +56,6 @@ int MLuaInterpreter::print(lua_State* l)
   output << "\n";
   return 0;
 }
-
 
 //------------------------------------------------------------
 //=======================>Constructors<=======================
@@ -74,9 +83,20 @@ void MLuaInterpreter::execute(std::string const& exePath)
 
 void MLuaInterpreter::registerFonctions()
 {
-  lua_register(lua, "avancer", MLuaInterpreter::avancer);
-  lua_register(lua, "print", MLuaInterpreter::print);
-  lua_register(lua, "tournerDe", MLuaInterpreter::tournerDe);
+  if (MParameters::getLang() == "En")
+  {
+    lua_register(lua, "moveForward", MLuaInterpreter::avancer);
+    lua_register(lua, "moveForwardBy", MLuaInterpreter::avancerDe);
+    lua_register(lua, "print", MLuaInterpreter::print);
+    lua_register(lua, "turn", MLuaInterpreter::tournerDe);
+  }
+  else
+  {
+    lua_register(lua, "avancer", MLuaInterpreter::avancer);
+    lua_register(lua, "avancerDe", MLuaInterpreter::avancerDe);
+    lua_register(lua, "ecrire", MLuaInterpreter::print);
+    lua_register(lua, "tournerDe", MLuaInterpreter::tournerDe);
+  }
 }
 
 //------------------------------------------------------------
@@ -87,7 +107,15 @@ void MLuaInterpreter::clearOutput()
   output.str(std::string());
 }
 
-std::stringstream const & MLuaInterpreter::getOutput() const
+std::stringstream const& MLuaInterpreter::getOutput() const
 {
+//  lua_Debug dbg;
+//
+//  lua_getinfo(lua, ">Sn", &dbg);
+//  if (dbg.what)
+//  {
+//    printLog(dbg.what, LogType::WARNING);
+//  }
+//  std::cout << output.str();
   return output;
 }
