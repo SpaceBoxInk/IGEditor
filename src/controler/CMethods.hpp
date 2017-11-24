@@ -16,6 +16,7 @@
 
 #include <wx/textctrl.h>
 #include <string>
+#include <set>
 
 class Editor;
 
@@ -24,6 +25,7 @@ enum class Event
   METHOD_INPUT,
   SAVE_AND_CLOSE_EDITOR,
   EXECUTE_EDITOR,
+  SYNTAX,
 };
 
 class CMethods : public Observer
@@ -31,6 +33,7 @@ class CMethods : public Observer
 //========================>Attributes<========================
 private:
   MMethodsLoader methodsLoader;
+  std::set<std::string> listeKey;
   MSave save;
   MLuaInterpreter luaInterpreter;
   Editor* ihmEditor;
@@ -48,6 +51,8 @@ public:
 private:
   void addEvents();
 
+  void writeColoredMet(std::string& method);
+  void writeColoredMot(std::string& mot);
   wxTextCoord formatMethod(std::string& method, std::vector<wxTextCoord> & wordRepCoord);
 //=====================>Getters&Setters<======================
 public:

@@ -7,6 +7,7 @@
 std::string MParameters::rootPath;
 std::string MParameters::programsPath;
 std::string MParameters::methodsListFile;
+std::string MParameters::font;
 std::string MParameters::lang;
 
 
@@ -55,6 +56,11 @@ std::string MParameters::getConfPath()
   return rootPath + configFile;
 }
 
+std::string MParameters::getFont()
+{
+  return font;
+}
+
 void MParameters::load(std::string exePath)
 {
   rootPath = exePath.substr(0, exePath.rfind('/') + 1);
@@ -91,6 +97,7 @@ void MParameters::load(std::string exePath)
   // set configurations
   methodsListFile = conf["methodsListFile"];
   programsPath = conf["programsPath"];
+  font = conf["font"];
   lang = conf["lang"];
 }
 
