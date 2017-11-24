@@ -11,6 +11,10 @@
 #include "MLuaInterpreter.hpp"
 #include "MParameters.hpp"
 
+#include "../tools/utils.hpp"
+
+#include <iostream>
+
 extern "C"
 {
 #include <lauxlib.h>
@@ -39,7 +43,7 @@ int MLuaInterpreter::avancerDe(lua_State* l)
 int MLuaInterpreter::tournerDe(lua_State* l)
 {
   int direction = lua_tonumber(l, 1);
-  output << "Tourne de " << direction << " degre" << '\n';
+  output << "Tourne de " << direction << " degres" << '\n';
   return 0;
 }
 
@@ -103,7 +107,15 @@ void MLuaInterpreter::clearOutput()
   output.str(std::string());
 }
 
-std::stringstream const & MLuaInterpreter::getOutput() const
+std::stringstream const& MLuaInterpreter::getOutput() const
 {
+//  lua_Debug dbg;
+//
+//  lua_getinfo(lua, ">Sn", &dbg);
+//  if (dbg.what)
+//  {
+//    printLog(dbg.what, LogType::WARNING);
+//  }
+//  std::cout << output.str();
   return output;
 }
