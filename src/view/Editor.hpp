@@ -38,12 +38,13 @@ private:
    */
   std::string motCourant; //sert a rien
 
-  static wxColour const* getDefaultColor();
 public:
   //=======================>Constructors<=======================
   Editor(wxString const & title);
 
   //=========================>Methods<==========================
+  static wxColour const* getDefaultColor();
+
   void OnQuit(wxCommandEvent & event);
   void OnAbort(wxCommandEvent & WXUNUSED(event));
   void OnAdd(wxCommandEvent & WXUNUSED(event));

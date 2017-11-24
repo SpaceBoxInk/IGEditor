@@ -32,6 +32,8 @@ class CMethods : public Observer
 {
 //========================>Attributes<========================
 private:
+  static wxColour const keywordColor;
+
   MMethodsLoader methodsLoader;
   std::set<std::string> listeKey;
   MSave save;

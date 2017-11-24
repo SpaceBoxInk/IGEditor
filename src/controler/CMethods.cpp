@@ -27,6 +27,8 @@ using namespace std;
 //========================>Constants<=========================
 //------------------------------------------------------------
 
+wxColour const CMethods::keywordColor = wxColour(0x8b0068);
+
 //------------------------------------------------------------
 //=======================>Constructors<=======================
 //------------------------------------------------------------
@@ -88,12 +90,12 @@ void CMethods::addEvents()
     if (listeKey.find(mot) != listeKey.end())
     {
       cout << "coords : " << coo[0] << " " << coo[1] << "if passé"<< endl;
-      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)wxColour(0x8b0068));
+      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)keywordColor);
     }
     else
     {
       cout << "coords : " << coo[0] << " " << coo[1] << "if pas passé" << endl;
-      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], ihmEditor->getEdit()->GetDefaultStyle());
+      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)*Editor::getDefaultColor());
     }
   });
 
@@ -140,7 +142,7 @@ void CMethods::writeColoredMot(std::string& mot)
   // FIXME : coloration faite 2 fois :/
   if (listeKey.find(mot) != listeKey.end())
   {
-    ihmEditor->writeMet(mot, new wxColour(0x8b0068));
+    ihmEditor->writeMet(mot, &keywordColor);
   }
   else
   {
