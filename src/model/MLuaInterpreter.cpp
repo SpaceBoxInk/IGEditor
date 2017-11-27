@@ -43,7 +43,7 @@ int MLuaInterpreter::avancerDe(lua_State* l)
 int MLuaInterpreter::tournerDe(lua_State* l)
 {
   int direction = lua_tonumber(l, 1);
-  output << "Tourne de " << direction << " degres" << '\n';
+  output << "Tourne de " << direction << " degrés" << '\n';
   return 0;
 }
 
