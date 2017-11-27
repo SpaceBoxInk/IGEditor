@@ -9,6 +9,7 @@
 #include "../tools/observerPattern/Observed.hpp"
 
 /**
+ * FIXME : a quoi sert cette classe !!!!!!!!!!!!!!!!!!!!!
  * la zone d'edition
  */
 class Edit : public wxPanel

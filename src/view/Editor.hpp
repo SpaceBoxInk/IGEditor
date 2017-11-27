@@ -62,7 +62,14 @@ public:
   std::string getIndentation() const;
   //=====================>Getters&Setters<======================
   wxTextCtrl* getEdit() const;
+  inline std::string getEditContent() const;
   wxTextCtrl* getRes() const;
   Methodes* getMethodes() const;
 };
 
+inline std::string Editor::getEditContent() const
+{
+  std::stringstream sstr;
+  sstr << getEdit()->GetValue().mb_str(wxConvUTF8);
+  return sstr.str();
+}

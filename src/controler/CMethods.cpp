@@ -82,22 +82,24 @@ void CMethods::addEvents()
     }
   });
 
-  addAction<Event>(Event::SYNTAX, [&](Observed const&) -> void
-  {
-    std::string mot;
+  addAction<Event>(
+      Event::SYNTAX,
+      [&](Observed const&)
+      {
+        std::string mot;
 
-    wxTextCoord* coo = ihmEditor->getMot(mot);
-    if (listeKey.find(mot) != listeKey.end())
-    {
-      cout << "coords : " << coo[0] << " " << coo[1] << "if passé"<< endl;
-      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)keywordColor);
-    }
-    else
-    {
-      cout << "coords : " << coo[0] << " " << coo[1] << "if pas passé" << endl;
-      ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)*Editor::getDefaultColor());
-    }
-  });
+        wxTextCoord* coo = ihmEditor->getMot(mot);
+        if (listeKey.find(mot) != listeKey.end())
+        {
+          printLog(string("coords : ") + to_string(coo[0]) + string(" ") + to_string(coo[1]) + " : colored", LogType::DEBUG);
+          ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)keywordColor);
+        }
+        else
+        {
+          printLog(string("coords : ") + to_string(coo[0]) + string(" ") + to_string(coo[1]) + " : not colored", LogType::DEBUG);
+          ihmEditor->getEdit()->SetStyle(coo[0],coo[1], (wxTextAttr)*Editor::getDefaultColor());
+        }
+      });
 
   addAction<Event, string>(Event::SAVE_AND_CLOSE_EDITOR, [&](string content, Observed const&)
   {
@@ -118,12 +120,12 @@ void CMethods::addEvents()
 
 }
 
-void CMethods::writeColoredMet(std::string& method)
+void CMethods::writeColoredMet(std::string const& method)
 {
   string motCur = "";
   for (char c : method)
   {
-    if (isalnum(c))
+    if (isalnum(c) || c < 0)
     {
       motCur += c;
     }
@@ -134,10 +136,10 @@ void CMethods::writeColoredMet(std::string& method)
       motCur = "";
     }
   }
-    writeColoredMot(motCur);
+  writeColoredMot(motCur);
 }
 
-void CMethods::writeColoredMot(std::string& mot)
+void CMethods::writeColoredMot(std::string const& mot)
 {
   // FIXME : coloration faite 2 fois :/
   if (listeKey.find(mot) != listeKey.end())

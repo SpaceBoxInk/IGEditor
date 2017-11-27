@@ -40,6 +40,7 @@ MSave::~MSave()
 void MSave::save(std::string const& content)
 {
   file.open(getFilePath(), std::ios::out);
+  std::cout << content << '\n';
   file << content;
   if (!file.fail())
   {
@@ -55,30 +56,14 @@ void MSave::save(std::string const& content)
 void MSave::load(std::string& content)
 {
   file.open(getFilePath(), std::ios::in);
-
-  file.seekg(0, file.end);
-  uint length = file.tellg();
-  file.seekg(0, file.beg);
-
-  char* buf = new char[length + 1];
-
-  file.read(buf, length);
+  content = "";
+  std::string buf;
+  while (!file.eof())
+  {
+    std::getline(file, buf);
+    content += buf;
+  }
   file.close();
-  buf[length] = 0;
-
-  content = buf;
-  if (length == content.size())
-  {
-    printLog("load successful", LogType::OK);
-  }
-  else
-  {
-    printLog("load fail ! not read good number of chars", LogType::ERROR);
-  }
-
-  delete[] buf;
-  buf = nullptr;
-
 }
 
 

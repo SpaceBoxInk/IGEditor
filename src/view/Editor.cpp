@@ -100,7 +100,7 @@ void Editor::OnAbort(wxCommandEvent & WXUNUSED(event))
 void Editor::OnAdd(wxCommandEvent & WXUNUSED(event))
 {
   setChanged();
-  notifyObservers(Event::EXECUTE_EDITOR, getEdit()->GetValue().ToStdString());
+  notifyObservers(Event::EXECUTE_EDITOR, getEditContent());
 }
 /**
  *
@@ -119,9 +119,7 @@ void Editor::OnChange(wxCommandEvent& event)
 void Editor::OnQuit(wxCommandEvent & WXUNUSED(event))
 {
   setChanged();
-  std::stringstream sstr;
-  sstr << getEdit()->GetValue().mb_str(wxConvUTF8);
-  notifyObservers(Event::SAVE_AND_CLOSE_EDITOR, sstr.str());
+  notifyObservers(Event::SAVE_AND_CLOSE_EDITOR, getEditContent());
   Close(true);
 }
 
@@ -207,7 +205,7 @@ void Editor::writeMet(std::string methode, wxColour const* color)
   att.SetAlignment(wxTextAttrAlignment::wxTEXT_ALIGNMENT_JUSTIFIED);
   att.SetFontEncoding(wxFontEncoding::wxFONTENCODING_UTF8);
   text->SetDefaultStyle(att);
-  text->WriteText(methode);
+  text->WriteText(wxString(methode.c_str(), wxConvUTF8));
 //  text->AppendText(methode);
   text->SetFocus(); // SEE : pratique ;) pour donner le focus au texte après les methodes
 }
@@ -220,7 +218,7 @@ void Editor::writeRes(std::string retur, wxColour const* color)
 {
   wxTextCtrl* text = getRes(); //on recupere la zone de retour
   text->SetDefaultStyle(wxTextAttr(*color));
-  text->AppendText(retur);
+  text->AppendText(wxString(retur.c_str(), wxConvUTF8));
 }
 
 void Editor::clearRes()

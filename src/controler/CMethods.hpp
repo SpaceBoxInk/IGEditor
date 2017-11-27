@@ -53,8 +53,8 @@ public:
 private:
   void addEvents();
 
-  void writeColoredMet(std::string& method);
-  void writeColoredMot(std::string& mot);
+  void writeColoredMet(std::string const& method);
+  void writeColoredMot(std::string const& mot);
   wxTextCoord formatMethod(std::string& method, std::vector<wxTextCoord> & wordRepCoord);
 //=====================>Getters&Setters<======================
 public:
