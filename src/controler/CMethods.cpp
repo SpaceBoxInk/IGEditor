@@ -14,11 +14,11 @@
 #include "../view/Editor.hpp"
 #include "../view/zones.hpp"
 
-#include <wx/chartype.h>
 #include <map>
-#include <set>
 #include <regex>
 #include <sstream>
+#include <utility>
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -39,17 +39,15 @@ CMethods::CMethods() :
   keywordColor = wxColour(MParameters::getKeywordColor());
   addEvents();
 
-  listeKey.insert("if");
-  listeKey.insert("then");
-  listeKey.insert("else");
-  listeKey.insert("elseif");
-  listeKey.insert("si");
-  listeKey.insert("end");
-  listeKey.insert("for");
-  listeKey.insert("do");
-  listeKey.insert("sinon");
-  listeKey.insert("finSi");
-  listeKey.insert("wallah");
+  std::ifstream keywords;
+  keywords.open(MParameters::getKeywordsPath());
+  std::string line;
+  while (!keywords.eof())
+  {
+    std::getline(keywords, line);
+    listeKey.insert(line);
+  }
+  keywords.close();
 
   // IHM init
   ihmEditor = new Editor(wxT("Editeur"));

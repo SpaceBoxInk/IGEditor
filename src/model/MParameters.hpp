@@ -34,6 +34,7 @@ private:
   static std::string programsPath;
   static auto constexpr configFile = "SbiEditor.conf";
   static std::string methodsListFile;
+  static std::string keywordListFile;
   static std::string font;
   static std::string lang;
   static int keywordColor;
@@ -50,6 +51,7 @@ public:
   static std::string getProgramsPath();
 
   static std::string getMethodsPath();
+  static std::string getKeywordsPath();
 
   static std::string getConfPath();
 

@@ -7,6 +7,7 @@
 std::string MParameters::rootPath;
 std::string MParameters::programsPath;
 std::string MParameters::methodsListFile;
+std::string MParameters::keywordListFile;
 std::string MParameters::font;
 std::string MParameters::lang;
 int MParameters::keywordColor;
@@ -97,6 +98,7 @@ void MParameters::load(std::string exePath)
   //=========================================================================================
   // set configurations
   methodsListFile = conf["methodsListFile"];
+  keywordListFile = conf["keywordListFile"];
   programsPath = conf["programsPath"];
   font = conf["font"];
   lang = conf["lang"];
@@ -111,4 +113,9 @@ std::string const& MParameters::getLang()
 int MParameters::getKeywordColor()
 {
   return keywordColor;
+}
+
+std::string MParameters::getKeywordsPath()
+{
+  return rootPath + keywordListFile;
 }
