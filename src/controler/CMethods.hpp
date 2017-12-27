@@ -32,7 +32,7 @@ class CMethods : public Observer
 {
 //========================>Attributes<========================
 private:
-  static wxColour const keywordColor;
+  static wxColour keywordColor;
 
   MMethodsLoader methodsLoader;
   std::set<std::string> listeKey;

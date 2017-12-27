@@ -61,7 +61,7 @@ void MSave::load(std::string& content)
   while (!file.eof())
   {
     std::getline(file, buf);
-    content += buf;
+    content += buf + "\n";
   }
   file.close();
 }

@@ -27,7 +27,7 @@ using namespace std;
 //========================>Constants<=========================
 //------------------------------------------------------------
 
-wxColour const CMethods::keywordColor = wxColour(0x8b0068);
+wxColour CMethods::keywordColor;
 
 //------------------------------------------------------------
 //=======================>Constructors<=======================
@@ -36,6 +36,7 @@ wxColour const CMethods::keywordColor = wxColour(0x8b0068);
 CMethods::CMethods() :
     methodsLoader("all" + MParameters::getLang()), save("defaultProgram.lua")
 {
+  keywordColor = wxColour(MParameters::getKeywordColor());
   addEvents();
 
   listeKey.insert("if");

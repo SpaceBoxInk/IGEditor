@@ -9,6 +9,7 @@ std::string MParameters::programsPath;
 std::string MParameters::methodsListFile;
 std::string MParameters::font;
 std::string MParameters::lang;
+int MParameters::keywordColor;
 
 
 bool MParameters::checkConfFile(std::string path)
@@ -99,9 +100,15 @@ void MParameters::load(std::string exePath)
   programsPath = conf["programsPath"];
   font = conf["font"];
   lang = conf["lang"];
+  keywordColor = std::stoi(conf["keywordColor"], nullptr, 16);
 }
 
 std::string const& MParameters::getLang()
 {
   return lang;
+}
+
+int MParameters::getKeywordColor()
+{
+  return keywordColor;
 }

@@ -36,6 +36,7 @@ private:
   static std::string methodsListFile;
   static std::string font;
   static std::string lang;
+  static int keywordColor;
 
 //========================>Methods<========================
 private:
@@ -53,6 +54,8 @@ public:
   static std::string getConfPath();
 
   static std::string getFont();
+
+  static int getKeywordColor();
 
   static std::string const& getLang();
 
